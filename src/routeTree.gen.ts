@@ -9,38 +9,141 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as AiToolsRouteImport } from './routes/ai-tools'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AiToolsIndexRouteImport } from './routes/ai-tools.index'
+import { Route as ApiAiRouteImport } from './routes/api/ai'
+import { Route as AiToolsPlannerRouteImport } from './routes/ai-tools.planner'
+import { Route as AiToolsEmailRouteImport } from './routes/ai-tools.email'
+import { Route as AiToolsChatRouteImport } from './routes/ai-tools.chat'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiToolsRoute = AiToolsRouteImport.update({
+  id: '/ai-tools',
+  path: '/ai-tools',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AiToolsIndexRoute = AiToolsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AiToolsRoute,
+} as any)
+const ApiAiRoute = ApiAiRouteImport.update({
+  id: '/api/ai',
+  path: '/api/ai',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiToolsPlannerRoute = AiToolsPlannerRouteImport.update({
+  id: '/planner',
+  path: '/planner',
+  getParentRoute: () => AiToolsRoute,
+} as any)
+const AiToolsEmailRoute = AiToolsEmailRouteImport.update({
+  id: '/email',
+  path: '/email',
+  getParentRoute: () => AiToolsRoute,
+} as any)
+const AiToolsChatRoute = AiToolsChatRouteImport.update({
+  id: '/chat',
+  path: '/chat',
+  getParentRoute: () => AiToolsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ai-tools': typeof AiToolsRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/ai-tools/chat': typeof AiToolsChatRoute
+  '/ai-tools/email': typeof AiToolsEmailRoute
+  '/ai-tools/planner': typeof AiToolsPlannerRoute
+  '/api/ai': typeof ApiAiRoute
+  '/ai-tools/': typeof AiToolsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/ai-tools/chat': typeof AiToolsChatRoute
+  '/ai-tools/email': typeof AiToolsEmailRoute
+  '/ai-tools/planner': typeof AiToolsPlannerRoute
+  '/api/ai': typeof ApiAiRoute
+  '/ai-tools': typeof AiToolsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ai-tools': typeof AiToolsRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/ai-tools/chat': typeof AiToolsChatRoute
+  '/ai-tools/email': typeof AiToolsEmailRoute
+  '/ai-tools/planner': typeof AiToolsPlannerRoute
+  '/api/ai': typeof ApiAiRoute
+  '/ai-tools/': typeof AiToolsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/ai-tools'
+    | '/sitemap.xml'
+    | '/ai-tools/chat'
+    | '/ai-tools/email'
+    | '/ai-tools/planner'
+    | '/api/ai'
+    | '/ai-tools/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/sitemap.xml'
+    | '/ai-tools/chat'
+    | '/ai-tools/email'
+    | '/ai-tools/planner'
+    | '/api/ai'
+    | '/ai-tools'
+  id:
+    | '__root__'
+    | '/'
+    | '/ai-tools'
+    | '/sitemap.xml'
+    | '/ai-tools/chat'
+    | '/ai-tools/email'
+    | '/ai-tools/planner'
+    | '/api/ai'
+    | '/ai-tools/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AiToolsRoute: typeof AiToolsRouteWithChildren
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  ApiAiRoute: typeof ApiAiRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-tools': {
+      id: '/ai-tools'
+      path: '/ai-tools'
+      fullPath: '/ai-tools'
+      preLoaderRoute: typeof AiToolsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +151,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ai-tools/': {
+      id: '/ai-tools/'
+      path: '/'
+      fullPath: '/ai-tools/'
+      preLoaderRoute: typeof AiToolsIndexRouteImport
+      parentRoute: typeof AiToolsRoute
+    }
+    '/api/ai': {
+      id: '/api/ai'
+      path: '/api/ai'
+      fullPath: '/api/ai'
+      preLoaderRoute: typeof ApiAiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-tools/planner': {
+      id: '/ai-tools/planner'
+      path: '/planner'
+      fullPath: '/ai-tools/planner'
+      preLoaderRoute: typeof AiToolsPlannerRouteImport
+      parentRoute: typeof AiToolsRoute
+    }
+    '/ai-tools/email': {
+      id: '/ai-tools/email'
+      path: '/email'
+      fullPath: '/ai-tools/email'
+      preLoaderRoute: typeof AiToolsEmailRouteImport
+      parentRoute: typeof AiToolsRoute
+    }
+    '/ai-tools/chat': {
+      id: '/ai-tools/chat'
+      path: '/chat'
+      fullPath: '/ai-tools/chat'
+      preLoaderRoute: typeof AiToolsChatRouteImport
+      parentRoute: typeof AiToolsRoute
+    }
   }
 }
 
+interface AiToolsRouteChildren {
+  AiToolsChatRoute: typeof AiToolsChatRoute
+  AiToolsEmailRoute: typeof AiToolsEmailRoute
+  AiToolsPlannerRoute: typeof AiToolsPlannerRoute
+  AiToolsIndexRoute: typeof AiToolsIndexRoute
+}
+
+const AiToolsRouteChildren: AiToolsRouteChildren = {
+  AiToolsChatRoute: AiToolsChatRoute,
+  AiToolsEmailRoute: AiToolsEmailRoute,
+  AiToolsPlannerRoute: AiToolsPlannerRoute,
+  AiToolsIndexRoute: AiToolsIndexRoute,
+}
+
+const AiToolsRouteWithChildren =
+  AiToolsRoute._addFileChildren(AiToolsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AiToolsRoute: AiToolsRouteWithChildren,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
+  ApiAiRoute: ApiAiRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
