@@ -96,9 +96,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: `${site.name} — ${site.tagline}` },
       { name: "twitter:description", content: site.description },
-      { title: "Lovable App" },
-      { property: "og:title", content: "Lovable App" },
-      { name: "twitter:title", content: "Lovable App" },
+      { title: "ZHT" },
+      { property: "og:title", content: "ZHT" },
+      { name: "twitter:title", content: "ZHT" },
       { name: "description", content: "ZHT AI Suite offers three intelligent AI tools for content generation, task planning, and conversation." },
       { property: "og:description", content: "ZHT AI Suite offers three intelligent AI tools for content generation, task planning, and conversation." },
       { name: "twitter:description", content: "ZHT AI Suite offers three intelligent AI tools for content generation, task planning, and conversation." },
@@ -107,7 +107,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
     scripts: [
       {
