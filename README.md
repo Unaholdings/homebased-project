@@ -37,7 +37,7 @@ Shared design language:
 - **Language**: TypeScript (strict mode)
 - **Forms & Validation**: React Hook Form + Zod
 - **AI Backend**: Lovable AI Gateway (`/api/ai` server route)
-- **State**: Updated**: TanStack Query for server-state hydration
+- **State**: TanStack Query for server-state hydration
 
 ---
 
