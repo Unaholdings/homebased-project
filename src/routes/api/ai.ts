@@ -79,13 +79,15 @@ export const Route = createFileRoute("/api/ai")({
         let messages: Array<{ role: string; content: string }>;
         try {
           const built = buildPrompt(parsed.data.mode, parsed.data.payload);
-          if ("messages" in built) {
+          if ("messages" in built && built.messages) {
             messages = [{ role: "system", content: built.system }, ...built.messages];
-          } else {
+          } else if ("user" in built && built.user) {
             messages = [
               { role: "system", content: built.system },
               { role: "user", content: built.user },
             ];
+          } else {
+            return Response.json({ error: "Invalid payload." }, { status: 400 });
           }
         } catch {
           return Response.json({ error: "Invalid payload for mode." }, { status: 400 });
